@@ -24,6 +24,8 @@ def dict_to_prim(dct):
                 dct[key] = None
             else:
                 dct[key] = str(item)
+        elif type(item) == str:
+            dct[key] = str(item)
         else:
             if key == 'reactions' and item is not None:
                 reactions = [v.__dict__ for v in item]
@@ -36,11 +38,14 @@ def dict_to_prim(dct):
                 else:
                     if type(item) == list:
                         for idx, it in enumerate(item):
-                            try:
-                                it = it.__dict__
-                                item[idx] = dict_to_prim(it)
-                            except AttributeError:
+                            if type(it) == str:
                                 item[idx] = str(it)
+                            else:
+                                try:
+                                    it = it.__dict__
+                                    item[idx] = dict_to_prim(it)
+                                except AttributeError:
+                                    item[idx] = str(it)
                     else:
                         if type(item) not in [dict, int, list, str, int, float, bool] and item is not None:
                             try:
@@ -50,7 +55,6 @@ def dict_to_prim(dct):
                                 dct[key] = str(item)
 
     return dct
-
 
 
 attributes_skip = ['chat', '_client']
@@ -75,8 +79,8 @@ async def main():
                 if mesdict['date'] >= start_date:
                     if n > 0:
                         output.write(',\n')
-                    print(dict_to_prim(mesdict))
-                    # json.dump(dict_to_prim(mesdict), output, indent=2, ensure_ascii=False)
+                    #print(dict_to_prim(mesdict))
+                    json.dump(dict_to_prim(mesdict), output, indent=2, ensure_ascii=False)
                     n = n + 1
                     print(n)
             output.write(']')
