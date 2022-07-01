@@ -7,12 +7,6 @@ from pyrogram import Client
 import datetime
 import login
 
-api_id = login.API_ID
-api_hash = login.API_HASH
-
-attributes_skip = ['chat', '_client']
-
-
 def dict_to_prim(dct):
     """
     Converts dictionary of pyrogram types to dictionary of primitive types
@@ -25,8 +19,11 @@ def dict_to_prim(dct):
         if key in attributes_skip:
             dct[key] = None
             continue
-        if key == 'text':
-            dct[key] = str(item)
+        if key == 'caption' or key == 'text':
+            if item is None:
+                dct[key] = None
+            else:
+                dct[key] = str(item)
         else:
             if key == 'reactions' and item is not None:
                 reactions = [v.__dict__ for v in item]
@@ -53,6 +50,13 @@ def dict_to_prim(dct):
                                 dct[key] = str(item)
 
     return dct
+
+
+
+attributes_skip = ['chat', '_client']
+
+api_id = login.API_ID
+api_hash = login.API_HASH
 
 
 start_date = datetime.datetime(2022, 3, 9)
