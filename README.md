@@ -1,2 +1,2 @@
 # Reactions prediction
-A project with a goal of creating a model that predicts emoji reactions to news on telegram channels
+A project with the goal of creating a model that predicts emoji reactions to the news on telegram channels
