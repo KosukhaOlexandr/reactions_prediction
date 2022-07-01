@@ -4,7 +4,7 @@ import ijson
 import json
 import datetime
 
-attr_to_keep = ['message_id', 'date', 'text', 'caption', 'views']
+attr_to_keep = ['message_id', 'date', 'text', 'caption', 'views', 'reactions']
 
 TSN_ID = -1001305722586
 
