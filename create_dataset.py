@@ -65,7 +65,7 @@ api_hash = login.API_HASH
 
 start_date = datetime.datetime(2022, 3, 9)
 
-tsn_id = -1001305722586
+TSN_ID = -1001305722586
 
 
 async def main():
@@ -73,7 +73,7 @@ async def main():
     with open("bigchat.json", "w+", encoding="utf-8") as output:
         output.write('[')
         async with Client('my_account', api_id, api_hash) as app:
-            async for message in app.iter_history(tsn_id):
+            async for message in app.iter_history(TSN_ID):
                 mesdict = message.__dict__
                 mesdict['date'] = datetime.datetime.fromtimestamp(mesdict.get('date'))
                 if mesdict['date'] >= start_date:
